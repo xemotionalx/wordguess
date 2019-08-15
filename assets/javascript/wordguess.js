@@ -1,58 +1,120 @@
-//initialize game
+/**** WORD GUESS / HANGMAN GAME 
+    // score resets to 0
+    // guesses reset to 10
+    // letters guessed is blank
+    // original picture is up
+    // text says "who's that pokemon?!" or it's blank
+    // the computer generates a random word 
+            // from a variable that is an array
+            // each variable in the array is an object
+        // *FOR* the length of that word, _ _ _ appears
+
+
+// when user hits a key, the game starts:
+// each time the user enters a key:
+    // IF the key is a match but not all have been guessed: 
+        // the letter shows up on the screen 
+        // replacing _ _ _
+    // ELSE IF the key is not a match, and there are more than 0 guesses
+        // guesses go down 1
+        // letters go in 'letters guessed'
+    // ELSE IF the key has already been guessed (is in correct or used):
+        // Nothing happens
+    // ELSE IF key is a match and all letters are guessed:
+        // picture changes (matches the pokemon)
+        // sound plays (matches the pokemon)
+        // guesses left reset
+    // ELSE if guesses get to 0:
+        //  Game ends & resets
+***/
+
+//DOM interaction
+var winsText = document.getElementById("wins-text");
+var currentWordText = document.getElementById("currentword-text");
+var guessesLeftText = document.getElementById("guessesleft-text");
+var lettersGuessedText = document.getElementById("lettersguessed-text");
+var answerText = document.getElementById("answer-text");
+var pokePic = document.getElementById("poke-pic");
+var startGame = document.getElementById('start') 
+
+// Declare variables to initialize
+var currentWord, guessesLeft, lettersGuessed
 var wins = 0;
-var losses = 0;
-var userGuess, guess, guessesLeft
 
-init();
+// Objects that store info for each possible word
+var pikachu = {
+answer: "pikachu",
+pokePic: "pokemon-0",
+spelling: ["p", "i", "k", "a", "c", "h", "u"]
+};
 
-// pressing a key starts the game
+var squirtle = {
+    answer: "squirtle",
+    pokePic: "pokemon-1",
+    spelling: ["s", "q", "u", "i", "r", "t", "l", "e"]
+};
+
+//Computer picks random word from array
+var pokemon = [pikachu, squirtle];
+var word = pokemon[Math.floor(Math.random() * pokemon.length)];
+
+// reset or initialize game
+reset();
+
+function updateWord() {
+    currentWordText.textContent = currentWord.join(" ");
+};
+
 document.onkeyup = function playGame() {
 
-    //the pressed key = guess: is stored in variable, pushed into array 
-    guess = event.key;
-    userGuess.push(guess);
-    
-    //the array is published to page
-    for (var i = 1; i < 9; i++) {
+    var userGuess = event.key;
 
-        document.getElementById("userinput").innerHTML = userGuess;
+    //check if userGuess matches any of the letters in the array
+    var checkGuess = word.spelling.includes(userGuess);
+    var checkLettersGuessed = lettersGuessed.includes(userGuess);
+
+    //check if the arrays of currentWord & word.spelling match (completed word)
+
+    if (JSON.stringify(word.spelling) === JSON.stringify(currentWord)) {
+       wins++
+       pokePic.src = 'assets/images/pokemon-' + pokemon.indexOf(word) + '.png';
+       answerText.textContent = "It's " + word.answer + "!!";
+       reset();
+       updateWord();
+    } else if (checkGuess === true && guessesLeft >= 1) {
+       //find matching index
+        var x = word.spelling.indexOf(userGuess);
+
+        //update the currentWord array with userGuess
+        currentWord[x] = userGuess;
+        updateWord();
+    } else if (checkGuess === false && guessesLeft > 1 && checkLettersGuessed === false) {
+        guessesLeft--
+        //wrong letter is added to lettersGuessed array
+        lettersGuessed.push(userGuess); 
+
+    } else if (guessesLeft <= 1) {
+        guessesLeftText.textContent = "GAME OVER";
+        return;
+    }
+
+    winsText.textContent = "Wins:" + wins;
+    guessesLeftText.textContent = guessesLeft;
+    lettersGuessedText.textContent = lettersGuessed;
+
+};
+
+function reset() {
+    // Declare variables to initialize
+    currentWord = [];
+    guessesLeft = 10;
+    lettersGuessed = [];
+    word = pokemon[Math.floor(Math.random() * pokemon.length)];
+    console.log(word);
+
+    // CURRENT WORD section: generate underscores based on length of word.spelling
+    for (i = 0; i < word.spelling.length; i++) {
+        currentWord.push("_");
     }
     
-    //computer generates random # 0-25; number gets converted to string a-z
-    var randomNumber = Math.floor(Math.random() * 25);
-    var alphabet = "abcdefghijklmnopqrstuvwxyz";
-    var randomLetter = alphabet.charAt(randomNumber);
-
-   //if guesses > 0, & the user gets it right the guesses reset to 9 and wins increase
-   //if guesses > 0, & the user gets it wrong the # of guesses remaining go down 1
-   //if guesses go down to 0, losses go up 1 and guesses reset to 9
-    if (guess === randomLetter && guessesLeft > 1) {
-        wins++;
-        init();
-    } else if  (userGuess !== randomLetter && guessesLeft > 1) {
-        guessesLeft--;
-    } else if (guessesLeft === 1) {
-        losses++;
-        init();
-    } 
-
-    document.getElementById('win').textContent = wins;
-    document.getElementById('loss').textContent = losses;
-    document.getElementById('guesses-left').textContent = guessesLeft;
-    
-     
-    //guesses reset
-    // guesses left resets
-    //wins and losses do NOT reset
-
-
-    console.log('computers random letter: ' + randomLetter);
-    console.log('the user guesses: ' + guess);
-    
-}
-
-function init() {
-    guessesLeft = 9;
-    userGuess = [];
-    guess;
-};
+    };
