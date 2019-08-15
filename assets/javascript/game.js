@@ -125,8 +125,8 @@ document.onkeyup = function playGame() {
         return;
     }
 
-    winsText.textContent = "Wins:" + wins;
-    guessesLeftText.textContent = guessesLeft;
+    winsText.textContent = "Wins: " + wins;
+    guessesLeftText.textContent = "Guesses Left: " + guessesLeft;
     lettersGuessedText.textContent = lettersGuessed;
 
 };
