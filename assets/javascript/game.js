@@ -34,6 +34,7 @@ var currentWordText = document.getElementById("currentword-text");
 var guessesLeftText = document.getElementById("guessesleft-text");
 var lettersGuessedText = document.getElementById("lettersguessed-text");
 var answerText = document.getElementById("answer-text");
+var pokePic = document.getElementById("poke-pic");
 
 // Declare variables to initialize
 var currentWord, guessesLeft, lettersGuessed
@@ -63,19 +64,20 @@ function updateWord() {
     currentWordText.textContent = currentWord.join(" ");
 };
 
-console.log(word);
-
 document.onkeyup = function playGame() {
 
     var userGuess = event.key;
 
     //check if userGuess matches any of the letters in the array
     var checkGuess = word.spelling.includes(userGuess);
+    var checkLettersGuessed = lettersGuessed.includes(userGuess);
 
     //check if the arrays of currentWord & word.spelling match (completed word)
 
     if (JSON.stringify(word.spelling) === JSON.stringify(currentWord)) {
        wins++
+       pokePic.src = 'assets/images/pokemon-' + pokemon.indexOf(word) + '.png';
+       answerText.textContent = "It's " + word.answer + "!!";
        reset();
        updateWord();
     } else if (checkGuess === true && guessesLeft >= 1) {
@@ -85,9 +87,10 @@ document.onkeyup = function playGame() {
         //update the currentWord array with userGuess
         currentWord[x] = userGuess;
         updateWord();
-
-    } else if (checkGuess === false && guessesLeft > 1) {
+    } else if (checkGuess === false && guessesLeft > 1 && checkLettersGuessed === false) {
         guessesLeft--
+        //wrong letter is added to lettersGuessed array
+        lettersGuessed.push(userGuess); 
 
     } else if (guessesLeft <= 1) {
         guessesLeftText.textContent = "GAME OVER";
@@ -96,6 +99,7 @@ document.onkeyup = function playGame() {
 
     winsText.textContent = "Wins:" + wins;
     guessesLeftText.textContent = guessesLeft;
+    lettersGuessedText.textContent = lettersGuessed;
 
 };
 
@@ -105,6 +109,7 @@ function reset() {
     guessesLeft = 10;
     lettersGuessed = [];
     word = pokemon[Math.floor(Math.random() * pokemon.length)];
+    console.log(word);
     
     // CURRENT WORD section: generate underscores based on length of word.spelling
     for (i = 0; i < word.spelling.length; i++) {
