@@ -13,72 +13,116 @@
     <!-- My CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
     <title>wordguess</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
 
-    <div role="main" class="container-fluid">
-        <header>
-            <img src="assets/images/header-1.png" class="img-fluid about-imgs">
-        </header>
+    <div role="main" class="container-fluid justify-content-center">
 
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <img src="assets/images/header-2.png" class="img-fluid about-imgs" id="header-img">
+            </div>
 
-
-        <div class="row d-flex justify-content-center">
-            <div class="col-6">
-
-                <div class="row d-flex justify-content-center">
-                    <img src="assets/images/pokeball.png" class="img-fluid about-imgs" id="poke-pic">
-                </div>
+            <div class="game-content">
 
                 <div class="row d-flex justify-content-center">
-                    <div id="answer-text">Who's that pokemon?!</div>
+                    <div class="col-6">
+
+                        <div class="row d-flex justify-content-center">
+                            Press Any Key to Start!
+                        </div>
+
+
+
+                        <!-- POKEDEX -->
+
+                        <div class="row d-flex justify-content-center">
+                            <!-- pokedex right side frame & body -->
+                            <div class="col-8 pokedex-body">
+
+                            <div class="row d-flex pokedex-top-frame">
+                                    <div class="pokedex-lens"></div>
+                            </div>
+
+                            <div class="row d-flex justify-content-center pokedex-top-body">
+
+                                    <div class="pokedex-screen container-fluid">
+                                            <div id="answer-text">Who's that pokemon?!</div>
+                                        </div>
+
+                                </div>
+
+                                <div class="row d-flex pokedex-bottom-body">
+                                        
+                                            <div class="pokedex-btn"></div>
+                                       
+                                      
+                                            <div class="pokedex-pad"></div>
+                                     
+                                       
+                                            <img src="assets/images/d-pad.png" id="d-pad">
+                                    
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="col-6">
+
+
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-10">
+                                <div id="bg-circle"><img src="assets/images/pokeball.png" class="img-fluid about-imgs" id="poke-pic"></div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-10">
+                                <div class="wins" id="wins-text">Wins: </div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center game-border">
+                            <div class="col-10">
+                                <p>Current Word:</p>
+                                <div id="currentword-text"></div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center game-border">
+                            <div class="col-10">
+                                <p>Guesses Left:</p>
+                                <div id="guessesleft-text"></div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center game-border">
+                            <div class="col-10">
+                                <p>Letters Already Guessed:</p>
+                                <div id="lettersguessed-text"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
                 </div>
 
             </div>
-
-            <div class="col-6">
-
-
-                <div class="row d-flex justify-content-center">
-                    <div class="col-10">
-                        <div>Press Any Key to Start!</div>
-                    </div>
-                </div>
-
-                <div class="row d-flex justify-content-center">
-                    <div class="col-10">
-                        <div id="wins-text">Wins: </div>
-                    </div>
-                </div>
-
-                <div class="row d-flex justify-content-center">
-                    <div class="col-10">
-                        <p>Current Word:</p>
-                        <div id="currentword-text"></div>
-                    </div>
-                </div>
-
-                <div class="row d-flex justify-content-center">
-                    <div class="col-10">
-                        <p>Guesses Left:</p>
-                        <div id="guessesleft-text"></div>
-                    </div>
-                </div>
-
-                <div class="row d-flex justify-content-center">
-                    <div class="col-10">
-                        <p>Letters Already Guessed:</p>
-                        <div id="lettersguessed-text"></div>
-                    </div>
-                </div>
-
-
-
-            </div>
-
         </div>
-
     </div>
 
 
@@ -86,29 +130,29 @@
     <!-- audio for all the pokemons stored here -->
 
     <!-- Squirtle -->
-    <audio autoplay id="squirtle-mp3">
+    <audio id="squirtle-mp3">
         <source src="assets/sounds/squirtle.wav" type="audio/mp3">
     </audio>
 
     <!-- Pikachu -->
-    <audio autoplay id="pikachu-mp3">
-            <source src="assets/sounds/pikachu.wav" type="audio/mp3">
-        </audio>
-    
+    <audio id="pikachu-mp3">
+        <source src="assets/sounds/pikachu.wav" type="audio/mp3">
+    </audio>
+
     <!-- Togepi -->
-    <audio autoplay id="togepi-mp3">
-            <source src="assets/sounds/togepi.wav" type="audio/mp3">
-        </audio>
-    
+    <audio id="togepi-mp3">
+        <source src="assets/sounds/togepi.wav" type="audio/mp3">
+    </audio>
+
     <!-- Clefairy -->
-    <audio autoplay id="clefairy-mp3">
-            <source src="assets/sounds/clefairy.wav" type="audio/mp3">
-        </audio>
+    <audio id="clefairy-mp3">
+        <source src="assets/sounds/clefairy.wav" type="audio/mp3">
+    </audio>
 
     <!-- Horsea -->
-    <audio autoplay id="horsea-mp3">
-            <source src="assets/sounds/horsea.wav" type="audio/mp3">
-        </audio>
+    <audio id="horsea-mp3">
+        <source src="assets/sounds/horsea.wav" type="audio/mp3">
+    </audio>
 
 
 

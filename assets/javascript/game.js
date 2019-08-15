@@ -49,18 +49,31 @@ var wins = 0;
 // Objects that store info for each possible word
 var pikachu = {
     answer: "pikachu",
-    pokePic: "pokemon-0",
     spelling: ["p", "i", "k", "a", "c", "h", "u"]
 };
 
 var squirtle = {
     answer: "squirtle",
-    pokePic: "pokemon-1",
     spelling: ["s", "q", "u", "i", "r", "t", "l", "e"]
 };
 
+var clefairy = {
+    answer: "clefairy",
+    spelling: ["c", "l", "e", "f", "a", "i", "r", "y"]
+};
+
+var togepi = {
+    answer: "togepi",
+    spelling: ["t", "o", "g", "e", "p", "i"]
+};
+
+var horsea = {
+    answer: "horsea",
+    spelling: ["h", "o", "r", "s", "e", "a"]
+};
+
 //Computer picks random word from array
-var pokemon = [pikachu, squirtle];
+var pokemon = [pikachu, squirtle, clefairy, togepi, horsea];
 var word = pokemon[Math.floor(Math.random() * pokemon.length)];
 
 // reset or initialize game
