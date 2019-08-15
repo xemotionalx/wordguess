@@ -33,6 +33,7 @@ var winsText = document.getElementById("wins-text");
 var currentWordText = document.getElementById("currentword-text");
 var guessesLeftText = document.getElementById("guessesleft-text");
 var lettersGuessedText = document.getElementById("lettersguessed-text");
+var answerText = document.getElementById("answer-text");
 
 // Declare variables to initialize
 var wins = 0;
@@ -78,23 +79,23 @@ document.onkeyup = function playGame() {
 
     //check if the arrays of currentWord & word.spelling match (completed word)
 
-    if (checkGuess === true && guessesLeft > 0) {
+    if (JSON.stringify(word.spelling) === JSON.stringify(currentWord)) {
+       wins++
+    } else if (checkGuess === true && guessesLeft >= 1) {
+       //find matching index
         var x = word.spelling.indexOf(userGuess);
 
-        winsText.textContent = wins;
+        //update the currentWord array with userGuess
         currentWord[x] = userGuess;
         updateWord();
 
-    } else if (checkGuess === false && guessesLeft > 0) {
+    } else if (checkGuess === false && guessesLeft > 1) {
         guessesLeft--
-    } else if (guessesLeft === 0) {
-        init();
-    }
 
-    // when key is pressed, check to see if it matches anything in array
-    // IF the key is a match  
-    // the letter shows up on the screen 
-    // replacing _ _ _
+    } else if (guessesLeft <= 1) {
+        guessesLeftText.textContent = "GAME OVER";
+        return;
+    }
 
     winsText.textContent = "Wins:" + wins;
     guessesLeftText.textContent = guessesLeft;
