@@ -29,7 +29,7 @@
 ***/
 
 // theme music starts playing
-window.onload = function() {
+window.onload = function () {
     document.getElementById("theme-mp3").play();
 }
 
@@ -40,6 +40,7 @@ var guessesLeftText = document.getElementById("guessesleft-text");
 var lettersGuessedText = document.getElementById("lettersguessed-text");
 var answerText = document.getElementById("answer-text");
 var pokePic = document.getElementById("poke-pic");
+var themeOn = document.getElementById("theme-mp3");
 
 
 // Declare variables to initialize
@@ -76,12 +77,38 @@ var horsea = {
 var pokemon = [pikachu, squirtle, clefairy, togepi, horsea];
 var word = pokemon[Math.floor(Math.random() * pokemon.length)];
 
-// reset or initialize game
-reset();
-
 function updateWord() {
     currentWordText.textContent = currentWord.join(" ");
 };
+
+//start or reset the game
+
+
+//function to play theme song && buttons to pause/play music
+function playTheme() {
+    themeOn.play();
+};
+
+// Buttons to toggle the music on/off
+document.getElementById("pause-music-btn").onclick = function pauseMusic() {
+    themeOn.pause();
+};
+
+document.getElementById("play-music-btn").onclick = function playMusic() {
+    themeOn.play();
+};
+
+// START GAME when button is pressed
+
+document.getElementById("start-btn").onclick = function startGame() {
+
+    playTheme();
+
+    reset();
+
+};
+
+//Game playing function as keys are pressed
 
 document.onkeyup = function playGame() {
 
@@ -108,6 +135,7 @@ document.onkeyup = function playGame() {
         answerText.textContent = "It's " + word.answer + "!!";
         reset();
         updateWord();
+        
     } else if (checkGuess === true && guessesLeft >= 1) {
         //find matching index
         var x = word.spelling.indexOf(userGuess);
@@ -121,7 +149,7 @@ document.onkeyup = function playGame() {
         lettersGuessed.push(userGuess);
 
     } else if (guessesLeft <= 1) {
-        guessesLeftText.textContent = "GAME OVER";
+        guessesLeftText.textContent = "GAME OVER :(";
         return;
     }
 
@@ -143,5 +171,7 @@ function reset() {
     for (i = 0; i < word.spelling.length; i++) {
         currentWord.push("_");
     }
+
+    updateWord();
 
 };

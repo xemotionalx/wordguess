@@ -28,6 +28,11 @@
         //  Game ends & resets
 ***/
 
+// theme music starts playing
+window.onload = function() {
+    document.getElementById("theme-mp3").play();
+}
+
 //DOM interaction
 var winsText = document.getElementById("wins-text");
 var currentWordText = document.getElementById("currentword-text");
@@ -35,7 +40,7 @@ var guessesLeftText = document.getElementById("guessesleft-text");
 var lettersGuessedText = document.getElementById("lettersguessed-text");
 var answerText = document.getElementById("answer-text");
 var pokePic = document.getElementById("poke-pic");
-var startGame = document.getElementById('start') 
+
 
 // Declare variables to initialize
 var currentWord, guessesLeft, lettersGuessed
@@ -43,19 +48,32 @@ var wins = 0;
 
 // Objects that store info for each possible word
 var pikachu = {
-answer: "pikachu",
-pokePic: "pokemon-0",
-spelling: ["p", "i", "k", "a", "c", "h", "u"]
+    answer: "pikachu",
+    spelling: ["p", "i", "k", "a", "c", "h", "u"]
 };
 
 var squirtle = {
     answer: "squirtle",
-    pokePic: "pokemon-1",
     spelling: ["s", "q", "u", "i", "r", "t", "l", "e"]
 };
 
+var clefairy = {
+    answer: "clefairy",
+    spelling: ["c", "l", "e", "f", "a", "i", "r", "y"]
+};
+
+var togepi = {
+    answer: "togepi",
+    spelling: ["t", "o", "g", "e", "p", "i"]
+};
+
+var horsea = {
+    answer: "horsea",
+    spelling: ["h", "o", "r", "s", "e", "a"]
+};
+
 //Computer picks random word from array
-var pokemon = [pikachu, squirtle];
+var pokemon = [pikachu, squirtle, clefairy, togepi, horsea];
 var word = pokemon[Math.floor(Math.random() * pokemon.length)];
 
 // reset or initialize game
@@ -67,6 +85,14 @@ function updateWord() {
 
 document.onkeyup = function playGame() {
 
+    // sound is selected based on chosen word
+    var soundOn = document.getElementById(word.answer + "-mp3");
+
+    //this function stores the command to play audio based on selected pokemon
+    function playSound() {
+        soundOn.play();
+    };
+
     var userGuess = event.key;
 
     //check if userGuess matches any of the letters in the array
@@ -76,13 +102,14 @@ document.onkeyup = function playGame() {
     //check if the arrays of currentWord & word.spelling match (completed word)
 
     if (JSON.stringify(word.spelling) === JSON.stringify(currentWord)) {
-       wins++
-       pokePic.src = 'assets/images/pokemon-' + pokemon.indexOf(word) + '.png';
-       answerText.textContent = "It's " + word.answer + "!!";
-       reset();
-       updateWord();
+        playSound();
+        wins++
+        pokePic.src = 'assets/images/pokemon-' + pokemon.indexOf(word) + '.png';
+        answerText.textContent = "It's " + word.answer + "!!";
+        reset();
+        updateWord();
     } else if (checkGuess === true && guessesLeft >= 1) {
-       //find matching index
+        //find matching index
         var x = word.spelling.indexOf(userGuess);
 
         //update the currentWord array with userGuess
@@ -91,15 +118,15 @@ document.onkeyup = function playGame() {
     } else if (checkGuess === false && guessesLeft > 1 && checkLettersGuessed === false) {
         guessesLeft--
         //wrong letter is added to lettersGuessed array
-        lettersGuessed.push(userGuess); 
+        lettersGuessed.push(userGuess);
 
     } else if (guessesLeft <= 1) {
         guessesLeftText.textContent = "GAME OVER";
         return;
     }
 
-    winsText.textContent = "Wins:" + wins;
-    guessesLeftText.textContent = guessesLeft;
+    winsText.textContent = "Wins: " + wins;
+    guessesLeftText.textContent = "Guesses Left: " + guessesLeft;
     lettersGuessedText.textContent = lettersGuessed;
 
 };
@@ -116,5 +143,7 @@ function reset() {
     for (i = 0; i < word.spelling.length; i++) {
         currentWord.push("_");
     }
-    
-    };
+
+    updateWord();
+
+};

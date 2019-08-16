@@ -34,7 +34,7 @@
                     <div class="col-6">
 
                         <div class="row d-flex justify-content-center">
-                            Press Any Key to Start!
+                            <button id="start-btn">Click to Start!</button>
                         </div>
 
 
@@ -78,10 +78,14 @@
                                     </div>
                             </div>
 
+                            <div class="row d-flex justify-content-center">
+                                    <button id="play-music-btn">Play Music</button>
+                                    <button id="pause-music-btn">Stop Music</button>
+                                </div>
+
                     </div>
 
                     <div class="col-6">
-
 
                         <div class="row d-flex justify-content-center">
                             <div class="col-10">
@@ -94,6 +98,7 @@
                                 <div class="wins" id="wins-text">Wins: </div>
                             </div>
                         </div>
+                        
 
                         <div class="row d-flex justify-content-center game-border">
                             <div class="col-10">
@@ -118,6 +123,18 @@
         </div>
     </div>
 
+
+
+<!-- Footer -->
+<footer class="page-footer font-small">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2019 MaiAda
+        </div>
+        <!-- Copyright -->
+      
+      </footer>
+      <!-- Footer -->
 
 
     <!-- audio for all the pokemons stored here -->
@@ -146,6 +163,11 @@
     <audio id="horsea-mp3">
         <source src="assets/sounds/horsea.wav" type="audio/mp3">
     </audio>
+
+    <!-- Theme Song -->
+    <audio id="theme-mp3">
+            <source src="assets/sounds/opening-theme.mp3" type="audio/mp3">
+        </audio>
 
 
 
