@@ -124,3 +124,8 @@ body {
     border-radius: 50%;
     max-width: 220px;
 }
+
+
+#next-word {
+    display: none;
+}

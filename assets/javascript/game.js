@@ -1,16 +1,18 @@
-/**** WORD GUESS / HANGMAN GAME 
+/**** WORD GUESS / HANGMAN GAME
+ //When Button is clicked... 
     // score resets to 0
     // guesses reset to 10
     // letters guessed is blank
     // original picture is up
-    // text says "who's that pokemon?!" or it's blank
+    // text says "who's that pokemon?!"
+    //theme music starts playing
     // the computer generates a random word 
             // from a variable that is an array
             // each variable in the array is an object
         // *FOR* the length of that word, _ _ _ appears
 
 
-// when user hits a key, the game starts:
+// Once the game begins...
 // each time the user enters a key:
     // IF the key is a match but not all have been guessed: 
         // the letter shows up on the screen 
@@ -20,7 +22,7 @@
         // letters go in 'letters guessed'
     // ELSE IF the key has already been guessed (is in correct or used):
         // Nothing happens
-    // ELSE IF key is a match and all letters are guessed:
+    // ELSE IF all letters have been guessed, & word is a match:
         // picture changes (matches the pokemon)
         // sound plays (matches the pokemon)
         // guesses left reset
@@ -28,12 +30,7 @@
         //  Game ends & resets
 ***/
 
-// theme music starts playing
-window.onload = function () {
-    document.getElementById("theme-mp3").play();
-}
-
-//DOM interaction
+// DOM interaction variables
 var winsText = document.getElementById("wins-text");
 var currentWordText = document.getElementById("currentword-text");
 var guessesLeftText = document.getElementById("guessesleft-text");
@@ -41,7 +38,8 @@ var lettersGuessedText = document.getElementById("lettersguessed-text");
 var answerText = document.getElementById("answer-text");
 var pokePic = document.getElementById("poke-pic");
 var themeOn = document.getElementById("theme-mp3");
-
+var whosThat = document.getElementById("whos-that");
+var nextWordBtn = document.getElementById("next-word");
 
 // Declare variables to initialize
 var currentWord, guessesLeft, lettersGuessed
@@ -77,20 +75,19 @@ var horsea = {
 var pokemon = [pikachu, squirtle, clefairy, togepi, horsea];
 var word = pokemon[Math.floor(Math.random() * pokemon.length)];
 
+// This function updates dom to place underscores
 function updateWord() {
     currentWordText.textContent = currentWord.join(" ");
 };
 
-//start or reset the game
-
-
-//function to play theme song && buttons to pause/play music
+//function to play theme song 
 function playTheme() {
     themeOn.play();
 };
 
 // Buttons to toggle the music on/off
 document.getElementById("pause-music-btn").onclick = function pauseMusic() {
+    whosThat.play();
     themeOn.pause();
 };
 
@@ -105,7 +102,6 @@ document.getElementById("start-btn").onclick = function startGame() {
     playTheme();
 
     reset();
-
 };
 
 //Game playing function as keys are pressed
@@ -133,9 +129,9 @@ document.onkeyup = function playGame() {
         wins++
         pokePic.src = 'assets/images/pokemon-' + pokemon.indexOf(word) + '.png';
         answerText.textContent = "It's " + word.answer + "!!";
+        nextWordBtn.style.display = "block";
         reset();
         updateWord();
-        
     } else if (checkGuess === true && guessesLeft >= 1) {
         //find matching index
         var x = word.spelling.indexOf(userGuess);
@@ -165,7 +161,6 @@ function reset() {
     guessesLeft = 10;
     lettersGuessed = [];
     word = pokemon[Math.floor(Math.random() * pokemon.length)];
-    console.log(word);
 
     // CURRENT WORD section: generate underscores based on length of word.spelling
     for (i = 0; i < word.spelling.length; i++) {
@@ -173,5 +168,12 @@ function reset() {
     }
 
     updateWord();
+};
 
+// Reset word when "Next Word" is pressed
+nextWordBtn.onclick = function nextWord() {
+    nextWordBtn.style.display = "none";
+    pokePic.src = 'assets/images/pokeball.png';
+    answerText.textContent = "Who's that pokemon?!";
+    whosThat.play();
 };
