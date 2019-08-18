@@ -41,6 +41,7 @@ var themeOn = document.getElementById("theme-mp3");
 var whosThat = document.getElementById("whos-that");
 var badEnd = document.getElementById("bad-end");
 var start = document.getElementById("start-btn");
+var bgCircle = document.getElementById("bg-circle");
 
 // Declare variables to initialize
 var currentWord, guessesLeft, lettersGuessed
@@ -109,14 +110,24 @@ document.getElementById("play-music-btn").onclick = function playMusic() {
     themeOn.play();
 };
 
+//function updates the text for Wins, Losses and Guesses Left
+
+function updateText() {
+    winsText.textContent = "Wins: " + wins;
+    guessesLeftText.textContent = "Guesses Left: " + guessesLeft;
+    lettersGuessedText.textContent = lettersGuessed;
+}
+
 // START GAME when button is pressed
 
 start.onclick = function startGame() {
     startPlay();
     reset();
     reset2();
-    wins = 0;
-    winsText.textContent = "Wins:" + wins;
+    updateText();
+
+    bgCircle.style.backgroundColor = "yellow";
+    bgCircle.style.borderWidth = "10px";
     start.style.display = "none";
     
 };
@@ -162,7 +173,9 @@ document.onkeyup = function playGame() {
 
     } else if (guessesLeft <= 1) {
         answerText.textContent = "Game Over :( Score: " + wins;
-        pokePic.src = "assets/images/prof-oak-mad.jpeg";
+        bgCircle.style.borderWidth = "0px";
+        bgCircle.style.backgroundColor = "black";
+        pokePic.src = "assets/images/prof-oak-mad.png";
         start.textContent = "Play Again!";
         start.style.display = "block";
         pauseMusic();
@@ -170,9 +183,7 @@ document.onkeyup = function playGame() {
         return;
     }
 
-    winsText.textContent = "Wins: " + wins;
-    guessesLeftText.textContent = "Guesses Left: " + guessesLeft;
-    lettersGuessedText.textContent = lettersGuessed;
+    updateText();
 
 };
 
