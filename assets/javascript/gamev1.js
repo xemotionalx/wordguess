@@ -39,8 +39,7 @@ var answerText = document.getElementById("answer-text");
 var pokePic = document.getElementById("poke-pic");
 var themeOn = document.getElementById("theme-mp3");
 var whosThat = document.getElementById("whos-that");
-var badEnd = document.getElementById("bad-end");
-var start = document.getElementById("start-btn");
+var nextWordBtn = document.getElementById("next-word");
 
 // Declare variables to initialize
 var currentWord, guessesLeft, lettersGuessed
@@ -86,18 +85,10 @@ function playTheme() {
     themeOn.play();
 };
 
-//function to play 'who's that pokemon?!', theme song, losing music
+//function to play 'who's that pokemon?!', then theme song
 function startPlay() {
     whosThat.play();
     setTimeout(playTheme, 3000);
-};
-
-function pauseMusic() {
-    themeOn.pause();
-};
-
-function lostGameMusic() {
-    badEnd.play();
 };
 
 // Buttons to toggle the music on/off
@@ -111,14 +102,18 @@ document.getElementById("play-music-btn").onclick = function playMusic() {
 
 // START GAME when button is pressed
 
-start.onclick = function startGame() {
+document.getElementById("start-btn").onclick = function startGame() {
+    wins = 0;
+    nextWordBtn.style.display = "block";
     startPlay();
     reset();
     reset2();
-    wins = 0;
-    winsText.textContent = "Wins:" + wins;
-    start.style.display = "none";
-    
+};
+
+// Reset word when "NEXT WORD" is pressed
+nextWordBtn.onclick = function nextWord() {
+    whosThat.play();
+    reset2();
 };
 
 //Game playing function as keys are pressed
@@ -163,10 +158,6 @@ document.onkeyup = function playGame() {
     } else if (guessesLeft <= 1) {
         answerText.textContent = "Game Over :( Score: " + wins;
         pokePic.src = "assets/images/prof-oak-mad.jpeg";
-        start.textContent = "Play Again!";
-        start.style.display = "block";
-        pauseMusic();
-        lostGameMusic();
         return;
     }
 
