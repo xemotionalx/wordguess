@@ -1,34 +1,3 @@
-/**** WORD GUESS / HANGMAN GAME
- //When Button is clicked... 
-    // score resets to 0
-    // guesses reset to 10
-    // letters guessed is blank
-    // original picture is up
-    // text says "who's that pokemon?!"
-    //theme music starts playing
-    // the computer generates a random word 
-            // from a variable that is an array
-            // each variable in the array is an object
-        // *FOR* the length of that word, _ _ _ appears
-
-
-// Once the game begins...
-// each time the user enters a key:
-    // IF the key is a match but not all have been guessed: 
-        // the letter shows up on the screen 
-        // replacing _ _ _
-    // ELSE IF the key is not a match, and there are more than 0 guesses
-        // guesses go down 1
-        // letters go in 'letters guessed'
-    // ELSE IF the key has already been guessed (is in correct or used):
-        // Nothing happens
-    // ELSE IF all letters have been guessed, & word is a match:
-        // picture changes (matches the pokemon)
-        // sound plays (matches the pokemon)
-        // guesses left reset
-    // ELSE if guesses get to 0:
-        //  Game ends & resets
-***/
 
 // DOM interaction variables
 var winsText = document.getElementById("wins-text");
@@ -144,7 +113,9 @@ document.onkeyup = function playGame() {
         soundOn.play();
     };
 
-    var userGuess = event.key;
+    //Stores keyup event as a guess, converts to lower case
+    var userGuess = event.key
+    var userGuess = userGuess.toLowerCase();
 
     //check if userGuess matches any of the letters in the array
     var checkGuess = word.spelling.includes(userGuess);
@@ -152,26 +123,28 @@ document.onkeyup = function playGame() {
 
     //check if the arrays of currentWord & word.spelling match (completed word)
 
-     if (JSON.stringify(word.spelling) === JSON.stringify(currentWord)) {
-        playSound();
-        wins++
-        pokePic.src = 'assets/images/pokemon-' + pokemon.indexOf(word) + '.png';
-        answerText.textContent = "It's " + word.answer + "!!";
-        reset();
-        updateWord();
-     } else if (checkGuess === true && guessesLeft >= 1) {
+    if (checkGuess === true && guessesLeft >= 1) {
+        
         //find matching index
         var x = word.spelling.indexOf(userGuess);
-
         //update the currentWord array with userGuess
         currentWord[x] = userGuess;
         updateWord();
+        
+        if (JSON.stringify(word.spelling) === JSON.stringify(currentWord)) {
+            playSound();
+            wins++;
+            pokePic.src = 'assets/images/pokemon-' + pokemon.indexOf(word) + '.png';
+            answerText.textContent = "It's " + word.answer + "!!";
+            reset();
+            updateWord();
+        }
+        
     } else if (checkGuess === false && guessesLeft > 1 && checkLettersGuessed === false) {
         guessesLeft--
         //wrong letter is added to lettersGuessed array
         lettersGuessed.push(userGuess);
-
-    } else if (guessesLeft <= 1) {
+     } else if (guessesLeft <= 1) {
         answerText.textContent = "Game Over :( Score: " + wins;
         bgCircle.style.borderWidth = "0px";
         bgCircle.style.backgroundColor = "black";
