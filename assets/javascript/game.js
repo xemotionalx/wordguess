@@ -137,7 +137,7 @@ document.onkeyup = function playGame() {
             pokePic.src = 'assets/images/pokemon-' + pokemon.indexOf(word) + '.png';
             answerText.textContent = "It's " + word.answer + "!!";
             reset();
-            updateWord();
+            
         }
         
     } else if (checkGuess === false && guessesLeft > 1 && checkLettersGuessed === false) {
